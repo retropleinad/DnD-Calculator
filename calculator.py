@@ -7,8 +7,9 @@ Class holds the main function for the calculator
 
 
 def main():
-    screen = gui.IntroScreen
+    screen = gui.IntroScreen()
+    screen.mainloop()
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
     main()

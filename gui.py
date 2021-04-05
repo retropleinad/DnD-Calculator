@@ -15,7 +15,8 @@ class IntroScreen:
         "damage_button": "Calculate Damage",
         "instruct_button": "Instructions",
         "spells_button": "Balance Spells",
-        "saving_throw_button": "Saving Throw Success"
+        "saving_throw_button": "Saving Throw Success",
+        "monster_lookup_button": "Monster Lookup"
     }
 
     # Buttons are buttons
@@ -28,6 +29,7 @@ class IntroScreen:
         self.instruct_button = None
         self.spells_button = None
         self.saving_throw_button = None
+        self.monster_lookup_button = None
 
         self.draw_buttons()
 
@@ -43,12 +45,15 @@ class IntroScreen:
                                        height=2, command=lambda: self.switch_screen("spells"))
         self.saving_throw_button = tk.Button(master=self.screen, text=self.__button_text["saving_throw_button"],
                                              width=15, height=2, command=lambda: self.switch_screen("saves"))
+        self.monster_lookup_button = tk.Button(master=self.screen, text=self.__button_text["monster_lookup_button"],
+                                               width=15, height=2, command=lambda: self.switch_screen("monster_lookup"))
 
         self.cr_button.grid(row=0, column=0, padx=5, pady=2)
         self.damage_button.grid(row=0, column=2, padx=5, pady=2)
         self.instruct_button.grid(row=0, column=1, padx=5, pady=2)
         self.spells_button.grid(row=1, column=1, padx=5, pady=2)
         self.saving_throw_button.grid(row=1, column=0, padx=5, pady=2)
+        self.monster_lookup_button.grid(row=1, column=2, padx=5, pady=2)
 
     # When a button is clicked, this method is called and takes the users to the appropriate screen
     def switch_screen(self, window):
@@ -62,6 +67,8 @@ class IntroScreen:
             spell_screen = SpellScreen()
         elif window.lower() == "saves":
             save_screen = SavingThrowScreen()
+        elif window.lower() == "monster_lookup":
+            monster_screen = MonsterLookupScreen()
         else:
             raise Exception("incorrect command: enter --cr, --dps, or --instruct")
 
@@ -106,7 +113,8 @@ class HelpScreen:
         "spell": "Placeholder for spells",
         "saves": "This screen calculates the rate that the target succeeds on a saving throw.\n "
                  "DC is calculated as 8 + proficiency modifier + spellcasting modifier",
-        "damage_saves": "Add an attack that hits based off of the target's saving throw."
+        "damage_saves": "Add an attack that hits based off of the target's saving throw.",
+        "monster_lookup": "Enter a monster's name then hit the search button."
     }
 
     def __init__(self, window):
@@ -713,3 +721,7 @@ class DamageSaveScreen:
 
     def mainloop(self):
         self.screen.mainloop()
+
+
+class MonsterLookupScreen:
+    pass

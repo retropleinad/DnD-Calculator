@@ -2,6 +2,8 @@ import tkinter as tk
 
 from gui import help
 
+from calculations import monster_lookup as lookup
+
 
 # Class for the monster lookup screen GUI
 class MonsterLookupScreen:
@@ -10,6 +12,7 @@ class MonsterLookupScreen:
     def __init__(self):
         self.screen = tk.Tk()
         self.screen.title = "Monster Lookup"
+        self.attributes = ("STR", "DEX", "CON", "INT", "WIS", "CHA")
 
         self.name_label = None
         self.hp_label = None
@@ -20,12 +23,6 @@ class MonsterLookupScreen:
         self.alignment_label = None
         self.senses_label = None
         self.languages_label = None
-
-        # Attribute labels and entries are both in arrays, because they for sure are grouped together
-        # self.attributes contains the labels for self.attribute_labels
-        self.attribute_labels = []
-        self.attributes = ("STR", "DEX", "CON", "INT", "WIS", "CHA")
-        self.attribute_entries = []
 
         self.name_entry = None
         self.hp_entry = None
@@ -42,6 +39,7 @@ class MonsterLookupScreen:
 
         self.draw_labels()
         self.draw_entries()
+        self.draw_attributes()
         self.draw_buttons()
 
     def draw_labels(self):
@@ -54,10 +52,6 @@ class MonsterLookupScreen:
         self.alignment_label = tk.Label(master=self.screen, text="Alignment", width=15, height=1)
         self.senses_label = tk.Label(master=self.screen, text="Senses", width=15, height=1)
         self.languages_label = tk.Label(master=self.screen, text="Languages", width=15, height=1)
-
-        for i in range(0, 6):
-            label = tk.Label(master=self.screen, text=self.attributes[i], width=15, height=1)
-            self.attribute_labels.append(label)
 
         self.name_label.grid(row=0, column=0, padx=1, pady=5)
         self.hp_label.grid(row=1, column=0, padx=1, pady=5)
@@ -90,15 +84,35 @@ class MonsterLookupScreen:
         self.senses_entry.grid(row=7, column=1, padx=1, pady=1)
         self.languages_entry.grid(row=8, column=1, padx=1, pady=1)
 
+    def draw_attributes(self):
+        for i in range(0, 6):
+            label = tk.Label(master=self.screen, text=self.attributes[i], width=15, height=1)
+            entry = tk.Entry(master=self.screen, width=10)
+            label.grid(row=i, column=2, padx=1, pady=5)
+            entry.grid(row=i, column=3, padx=1, pady=5)
+
     def draw_buttons(self):
         self.search_button = tk.Button(master=self.screen, text="Search", width=10, height=1, command=self.search)
         self.help_button = tk.Button(master=self.screen, text="Help", width=10, height=1, command=self.draw_help)
-        
-        self.search_button.grid(row=0, column=2, padx=1, pady=1)
-        self.help_button.grid(row=8, column=2, padx=1, pady=1)
+
+        self.search_button.grid(row=0, column=4, padx=1, pady=1)
+        self.help_button.grid(row=8, column=4, padx=1, pady=1)
 
     def search(self):
-        pass
+        try:
+            name = self.name_entry.get()
+            info = lookup.search(name)
+
+            self.hp_entry.delete(0, tk.END)
+            self.speed_entry.delete(0, tk.END)
+            self.cr_entry.delete(0, tk.END)
+            self.type_entry.delete(0, tk.END)
+            self.size_entry.delete(0, tk.END)
+            self.alignment_entry.delete(0, tk.END)
+            self.senses_entry.delete(0, tk.END)
+            self.languages_entry.delete(0, tk.END)
+        except OSError or TypeError:
+            error_screen = help.ErrorScreen("monster_lookup")
 
     def draw_help(self):
         helpscreen = help.HelpScreen("monster_lookup")

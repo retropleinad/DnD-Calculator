@@ -139,12 +139,11 @@ class HelpScreen:
 class ErrorScreen(HelpScreen):
 
     def __init__(self, window):
-        self.error_message = "Error: Please input a numerical value.\n\n"
         super().__init__(window)
         self.screen.title("Error")
 
     # Draws text onto the screen
     def draw_text(self, window):
         text = tk.Text(master=self.screen, height=20, width=45, relief="sunken", wrap="word", padx=5, pady=5)
-        text.insert(tk.END, self.error_message + self.messages[window])
+        text.insert(tk.END, self.messages[window])
         text.pack()

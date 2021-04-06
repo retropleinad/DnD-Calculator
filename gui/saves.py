@@ -1,6 +1,6 @@
 import tkinter as tk
 
-import damage
+from calculations import damage
 
 from gui import help
 

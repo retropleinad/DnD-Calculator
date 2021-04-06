@@ -1,7 +1,7 @@
 import tkinter as tk
 import tksheet
 
-import damage
+from calculations import damage
 
 from gui import help
 

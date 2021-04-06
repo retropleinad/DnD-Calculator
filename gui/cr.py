@@ -1,6 +1,6 @@
 import tkinter as tk
 
-import regressions
+from calculations import regressions
 
 from gui import help
 

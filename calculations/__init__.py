@@ -5,4 +5,6 @@ regressions.py holds files for creating and using linear regressions to calculat
 
 damage.py contains classes for handling calculations over attacks
 
+monster_lookup.py contains functions for looking monsters up
+
 """

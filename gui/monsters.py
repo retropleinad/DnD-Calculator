@@ -33,6 +33,7 @@ class MonsterLookupScreen:
         self.alignment_entry = None
         self.senses_entry = None
         self.languages_entry = None
+        self.attribute_entries = []
 
         self.search_button = None
         self.help_button = None
@@ -90,6 +91,7 @@ class MonsterLookupScreen:
             entry = tk.Entry(master=self.screen, width=10)
             label.grid(row=i, column=2, padx=1, pady=5)
             entry.grid(row=i, column=3, padx=1, pady=5)
+            self.attribute_entries.append(entry)
 
     def draw_buttons(self):
         self.search_button = tk.Button(master=self.screen, text="Search", width=10, height=1, command=self.search)
@@ -111,8 +113,21 @@ class MonsterLookupScreen:
             self.alignment_entry.delete(0, tk.END)
             self.senses_entry.delete(0, tk.END)
             self.languages_entry.delete(0, tk.END)
+
+            self.hp_entry.insert(string=info["hp"], index=0)
+            self.speed_entry.insert(string=info["speed"], index=0)
+            self.cr_entry.insert(string=info["cr"], index=0)
+            self.type_entry.insert(string=info["type"], index=0)
+            self.size_entry.insert(string=info["size"], index=0)
+            self.alignment_entry.insert(string=info["alignment"], index=0)
+            self.senses_entry.insert(string=info["senses"], index=0)
+            self.languages_entry.insert(string=info["languages"], index=0)
+        finally:
+            pass
+        """
         except OSError or TypeError:
             error_screen = help.ErrorScreen("monster_lookup")
+        """
 
     def draw_help(self):
         helpscreen = help.HelpScreen("monster_lookup")

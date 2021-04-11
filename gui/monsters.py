@@ -103,7 +103,7 @@ class MonsterLookupScreen:
     def search(self):
         try:
             name = self.name_entry.get()
-            info = lookup.search(name)
+            traits = lookup.get_traits(name)
 
             self.hp_entry.delete(0, tk.END)
             self.speed_entry.delete(0, tk.END)
@@ -114,20 +114,23 @@ class MonsterLookupScreen:
             self.senses_entry.delete(0, tk.END)
             self.languages_entry.delete(0, tk.END)
 
-            self.hp_entry.insert(string=info["hp"], index=0)
-            self.speed_entry.insert(string=info["speed"], index=0)
-            self.cr_entry.insert(string=info["cr"], index=0)
-            self.type_entry.insert(string=info["type"], index=0)
-            self.size_entry.insert(string=info["size"], index=0)
-            self.alignment_entry.insert(string=info["alignment"], index=0)
-            self.senses_entry.insert(string=info["senses"], index=0)
-            self.languages_entry.insert(string=info["languages"], index=0)
-        finally:
-            pass
-        """
+            self.hp_entry.insert(string=traits["hp"], index=0)
+            self.speed_entry.insert(string=traits["speed"], index=0)
+            self.cr_entry.insert(string=traits["cr"], index=0)
+            self.type_entry.insert(string=traits["type"], index=0)
+            self.size_entry.insert(string=traits["size"], index=0)
+            self.alignment_entry.insert(string=traits["alignment"], index=0)
+            self.senses_entry.insert(string=traits["senses"], index=0)
+            self.languages_entry.insert(string=traits["languages"], index=0)
+
+            attributes = lookup.get_attributes(name)
+            print(len(attributes))
+            for i in range(0, 6):
+                self.attribute_entries[i].delete(0, tk.END)
+                self.attribute_entries[i].insert(string=attributes[i], index=0)
+            
         except OSError or TypeError:
             error_screen = help.ErrorScreen("monster_lookup")
-        """
 
     def draw_help(self):
         helpscreen = help.HelpScreen("monster_lookup")

@@ -1,12 +1,12 @@
 from DnD4py import lookup_5e as lookup
 
 
-def search(name):
+def get_traits(name):
     monster = lookup.Roll20Monster(name=name)
-    return to_dict(monster.str_attributes)
+    return split_traits(monster.str_attributes)
 
 
-def to_dict(string):
+def split_traits(string):
     elements = string.split("\n")
     out = {
         "hp": elements[0],
@@ -21,3 +21,13 @@ def to_dict(string):
         "languages": elements[9]
     }
     return out
+
+
+def get_attributes(name):
+    monster = lookup.Roll20Monster(name=name)
+    attributes = monster.str_attributes.split("\n")
+    values = attributes[6].replace("\t", "").split(" ")
+    return values
+
+
+get_attributes("goblin")

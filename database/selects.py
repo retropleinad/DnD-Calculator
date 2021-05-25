@@ -39,13 +39,7 @@ def select(table, conditions):
     """
     query = query.format(table)
     query = util.add_conditions(query, conditions)
-
-    connection = sqlite3.connect(path)
-    cursor = connection.cursor()
-    cursor.execute(query)
-
-    data = cursor.fetchall()
-    return data
+    return util.fetch(query)
 
 
 # Select all characters (player and npc) in Drydock
@@ -61,6 +55,7 @@ def drydock_chars():
         INNER JOIN region
             ON npcs.region_id = region.region_id;
     """
+    return util.fetch(query)
 
 
 def list_dead():
@@ -73,6 +68,7 @@ def list_dead():
         FROM npcs
         WHERE NOT alive;
     """
+    return util.fetch(query)
 
 
 def list_living():
@@ -85,10 +81,11 @@ def list_living():
         FROM npcs
         WHERE alive;
     """
+    return util.fetch(query)
 
 
 # List all items owned by a particular character
-def items_owned(owner_id, owner_name=None):
+def items_owned(owner_id=None, owner_name=None):
     if owner_name is None:
         query = """
             SELECT item_id, name 
@@ -104,10 +101,11 @@ def items_owned(owner_id, owner_name=None):
                 WHERE pcs.name = {0}
             ) 
         """.format(owner_name)
+    return util.fetch(query)
 
 
 # List all characters belonging to a particular class
-def class_chars(class_id, class_name=None):
+def class_chars(class_id=None, class_name=None):
     if class_name is None:
         query = """
             SELECT pc_id, name, player
@@ -123,9 +121,10 @@ def class_chars(class_id, class_name=None):
                 WHERE class.name = {0}
             )
         """.format(class_name)
+    return util.fetch(query)
 
 
-def org_chars(org_id, org_name=None):
+def org_chars(org_id=None, org_name=None):
     if org_name is None:
         query = """
             SELECT pc_id, name, player
@@ -152,3 +151,4 @@ def org_chars(org_id, org_name=None):
                 WHERE organization.name = {0}
             )
         """.format(org_id)
+    return util.fetch(query)

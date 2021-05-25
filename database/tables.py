@@ -60,14 +60,14 @@ tables = (
             player TEXT NOT NULL,
             description TEXT,
             alive BOOL DEFAULT TRUE,
-            class INTEGER,
+            class_id INTEGER,
             origin INTEGER,
             region_id INTEGER,
-            organization INTEGER,
-            FOREIGN KEY(class) REFERENCES class(class_id),
+            organization_id INTEGER,
+            FOREIGN KEY(class_id) REFERENCES class(class_id),
             FOREIGN KEY(origin) REFERENCES region(region_id),
             FOREIGN KEY(region_id) REFERENCES region(region_id),
-            FOREIGN KEY(organization) REFERENCES organization(organization_id)
+            FOREIGN KEY(organization_id) REFERENCES organization(organization_id)
         )
     """,
     """
@@ -86,20 +86,9 @@ tables = (
         CREATE TABLE items (
             item_id INTEGER PRIMARY KEY,
             name TEXT NOT NULL,
-            description TEXT
-        )
-    """,
-    """
-        CREATE TABLE item_owner (
-            owner_id INTEGER PRIMARY KEY,
-            item INTEGER NOT NULL,
-            pc INTEGER,
-            npc INTEGER,
-            organization INTEGER,
-            FOREIGN KEY(item) references items(item_id),
-            FOREIGN KEY(pc) references pcs(pc_id),
-            FOREIGN KEY(npc) references npcs(npc_id),
-            FOREIGN KEY(organization) references organization(organization_id)
+            pc_id INT,
+            description TEXT,
+            FOREIGN KEY(pc_id) REFERENCES pcs(pc_id)
         )
     """
 )

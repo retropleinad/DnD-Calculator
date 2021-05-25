@@ -87,15 +87,68 @@ def list_living():
     """
 
 
-def items_owned(owner_id):
-    query = """
-    
-    """
+# List all items owned by a particular character
+def items_owned(owner_id, owner_name=None):
+    if owner_name is None:
+        query = """
+            SELECT item_id, name 
+            FROM items
+            WHERE owner_id = {0}
+        """.format(owner_id)
+    else:
+        query = """
+            SELECT item_id, name
+            FROM items
+            WHERE owner_id = (
+                SELECT pc_id FROM pcs
+                WHERE pcs.name = {0}
+            ) 
+        """.format(owner_name)
 
 
-def class_chars(dnd_class):
-    pass
+# List all characters belonging to a particular class
+def class_chars(class_id, class_name=None):
+    if class_name is None:
+        query = """
+            SELECT pc_id, name, player
+            FROM pcs
+            WHERE class_id = {0}
+        """.format(class_id)
+    else:
+        query = """
+            SELECT pc_id, name, player 
+            FROM pcs
+            WHERE class_id = (
+                SELECT class_id FROM class
+                WHERE class.name = {0}
+            )
+        """.format(class_name)
 
 
-def org_chars():
-    pass
+def org_chars(org_id, org_name=None):
+    if org_name is None:
+        query = """
+            SELECT pc_id, name, player
+            FROM pcs
+            WHERE organization_id = {0}
+            UNION
+            SELECT npc_id, name
+            FROM npcs
+            WHERE organization_id = {0}
+        """.format(org_id)
+    else:
+        query = """
+            SELECT pc_id, name, player
+            FROM pcs
+            WHERE organization_id = (
+                SELECT organization_id FROM organization
+                WHERE organization.name = {0}
+            )
+            UNION
+            SELECT npc_id, name
+            FROM npcs
+            WHERE organization_id = (
+                SELECT organization_id FROM organization
+                WHERE organization.name = {0}
+            )
+        """.format(org_id)

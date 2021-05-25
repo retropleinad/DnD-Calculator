@@ -56,17 +56,17 @@ tables = (
     """
         CREATE TABLE pcs (
             pc_id INTEGER PRIMARY KEY,
-            player TEXT NOT NULL,
             name TEXT NOT NULL,
+            player TEXT NOT NULL,
             description TEXT,
             alive BOOL DEFAULT TRUE,
             class INTEGER,
             origin INTEGER,
-            area INTEGER,
+            region_id INTEGER,
             organization INTEGER,
             FOREIGN KEY(class) REFERENCES class(class_id),
             FOREIGN KEY(origin) REFERENCES region(region_id),
-            FOREIGN KEY(area) REFERENCES region(region_id),
+            FOREIGN KEY(region_id) REFERENCES region(region_id),
             FOREIGN KEY(organization) REFERENCES organization(organization_id)
         )
     """,

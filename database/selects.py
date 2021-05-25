@@ -46,3 +46,56 @@ def select(table, conditions):
 
     data = cursor.fetchall()
     return data
+
+
+# Select all characters (player and npc) in Drydock
+def drydock_chars():
+    query = """
+        SELECT pc_id, name, player
+        FROM pcs
+        INNER JOIN region
+            ON pcs.region_id = region.region_id
+        UNION
+        SELECT npc_id, name
+        FROM npcs
+        INNER JOIN region
+            ON npcs.region_id = region.region_id;
+    """
+
+
+def list_dead():
+    query = """
+        SELECT pc_id, name, player
+        FROM pcs
+        WHERE NOT alive
+        UNION
+        SELECT npc_id, name
+        FROM npcs
+        WHERE NOT alive;
+    """
+
+
+def list_living():
+    query = """
+        SELECT pc_id, name, player
+        FROM pcs
+        WHERE alive
+        UNION
+        SELECT npc_id, name
+        FROM npcs
+        WHERE alive;
+    """
+
+
+def items_owned(owner_id):
+    query = """
+    
+    """
+
+
+def class_chars(dnd_class):
+    pass
+
+
+def org_chars():
+    pass
